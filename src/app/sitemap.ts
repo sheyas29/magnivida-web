@@ -8,12 +8,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [
     '',
     '/services',
-    '/about', // Assuming /#about is handled, but /about route might be desired for SEO scaling
     '/industries',
     '/careers',
     '/contact',
-    '/creative',
-    '/clients',
+    '/privacy-policy',
+    '/terms-of-service',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),

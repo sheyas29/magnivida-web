@@ -4,14 +4,14 @@ import { Footer } from '@/components/layout/Footer';
 import { Button } from '@/components/ui/Button';
 import { COMPANY_INFO, SERVICES } from '@/lib/constants';
 import { motion } from 'framer-motion';
-import { Mail, MapPin, Phone, Send } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { Check, ChevronDown, Mail, MapPin, Phone, Send } from 'lucide-react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 type FormState = {
   firstName: string;
   lastName: string;
   email: string;
-  service: string;
+  services: string[];
   message: string;
 };
 
@@ -41,16 +41,42 @@ export default function ContactPage() {
     firstName: '',
     lastName: '',
     email: '',
-    service: serviceOptions[0]?.value ?? 'service',
+    services: [],
     message: '',
   });
 
   const [error, setError] = useState<string | null>(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setDropdownOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const safePhoneForTel = useMemo(() => phone.replace(/[^\d+]/g, ''), [phone]);
 
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((prev) => ({ ...prev, [key]: value }));
+  }
+
+  function toggleService(value: string) {
+    setForm((prev) => {
+      const exists = prev.services.includes(value);
+      if (exists) {
+        return { ...prev, services: prev.services.filter((s) => s !== value) };
+      }
+      return { ...prev, services: [...prev.services, value] };
+    });
   }
 
   function handleSubmit(e: React.FormEvent) {
@@ -62,13 +88,13 @@ export default function ContactPage() {
       return;
     }
 
-    const subject = `Quote Request — ${form.service || 'Service'}`;
+    const subject = `Quote Request — ${form.services.length > 0 ? form.services.join(', ') : 'General Query'}`;
     const bodyLines = [
       'New quote request received:',
       '',
       `Name: ${form.firstName} ${form.lastName}`.trim(),
       `Work Email: ${form.email}`,
-      `Service Required: ${form.service}`,
+      `Services Required: ${form.services.length > 0 ? form.services.map((s) => serviceOptions.find((opt) => opt.value === s)?.label || s).join(', ') : 'None selected'}`,
       '',
       'Message:',
       form.message || '(No message provided)',
@@ -227,41 +253,62 @@ export default function ContactPage() {
 
               <div className="space-y-2">
                 <label className="text-xs font-bold text-[#dfb755] uppercase tracking-wider">
-                  Service Required
+                  Service Required (Select Multiple)
                 </label>
-                <div className="relative">
-                  <select
-                    value={form.service}
-                    onChange={(e) => update('service', e.target.value)}
-                    className="w-full appearance-none bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-[#dfb755] focus:ring-1 focus:ring-[#dfb755]/50 focus:outline-none transition-all"
+                <div className="relative" ref={dropdownRef}>
+                  <button
+                    type="button"
+                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                    className="w-full flex items-center justify-between bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-[#dfb755] focus:outline-none transition-all text-left"
                   >
-                    {serviceOptions.map((opt) => (
-                      <option
-                        key={opt.value}
-                        value={opt.value}
-                        className="bg-[#0a1629] text-white"
-                      >
-                        {opt.label}
-                      </option>
-                    ))}
-                  </select>
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-500">
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 12 12"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
+                    <span
+                      className={
+                        form.services.length === 0
+                          ? 'text-zinc-600'
+                          : 'text-white truncate'
+                      }
                     >
-                      <path
-                        d="M2.5 4.5L6 8L9.5 4.5"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </div>
+                      {form.services.length === 0
+                        ? 'Select services...'
+                        : form.services
+                            .map(
+                              (s) =>
+                                serviceOptions.find((opt) => opt.value === s)
+                                  ?.label
+                            )
+                            .join(', ')}
+                    </span>
+                    <ChevronDown
+                      size={16}
+                      className={`text-zinc-500 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`}
+                    />
+                  </button>
+
+                  {dropdownOpen && (
+                    <div className="absolute top-full left-0 right-0 mt-2 bg-[#0a1629] border border-white/10 rounded-xl shadow-xl overflow-hidden z-20 max-h-60 overflow-y-auto">
+                      {serviceOptions.map((opt) => {
+                        const isSelected = form.services.includes(opt.value);
+                        return (
+                          <div
+                            key={opt.value}
+                            onClick={() => toggleService(opt.value)}
+                            className={`flex items-center gap-3 px-4 py-3 cursor-pointer transition-colors ${isSelected ? 'bg-[#dfb755]/10 text-white' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}
+                          >
+                            <div
+                              className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${isSelected ? 'bg-[#dfb755] border-[#dfb755]' : 'border-zinc-600'}`}
+                            >
+                              {isSelected && (
+                                <Check size={12} className="text-black" />
+                              )}
+                            </div>
+                            <span className="text-sm font-medium">
+                              {opt.label}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
               </div>
 
