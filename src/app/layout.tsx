@@ -23,6 +23,10 @@ export const metadata: Metadata = {
     'Staffing Solutions',
     'Magnivida',
   ],
+  verification: {
+    google:
+      '<meta name="google-site-verification" content="UuioaPDwUsQnz0hwADo9ldBURAzxSo9zlA0HG2Mr5zI" />',
+  },
 };
 
 export default function RootLayout({
