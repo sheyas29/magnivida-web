@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Hard-forcing the Navy & Gold Theme */
+    --background: 218 74% 11%;
+    /* #07162f */
+    --foreground: 43 68% 95%;
+    /* Off-White */
+
+    --card: 218 74% 13%;
+    --card-foreground: 43 68% 95%;
+
+    --popover: 218 74% 11%;
+    --popover-foreground: 43 68% 95%;
+
+    --primary: 43 68% 60%;
+    /* #dfb755 (GOLD) */
+    --primary-foreground: 218 74% 11%;
+    /* Navy */
+
+    --secondary: 218 50% 20%;
+    --secondary-foreground: 43 68% 95%;
+
+    --muted: 218 30% 25%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 43 68% 60%;
+    --accent-foreground: 218 74% 11%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 43 68% 95%;
+
+    --border: 218 30% 25%;
+    --input: 218 30% 25%;
+    --ring: 43 68% 60%;
+
+    --radius: 0.5rem;
+  }
+}
+
+/* Ensure background color is applied globally */
+body {
+  background-color: #07162f;
+  /* Fallback */
+  color: white;
+}

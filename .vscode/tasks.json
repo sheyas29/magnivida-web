@@ -1,0 +1,12 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "add_shine_animation",
+			"type": "shell",
+			"command": "echo \"@keyframes shine { 0% { background-position: 200% center; } 100% { background-position: -200% center; } }\" >> src/app/globals.css && echo \".animate-shine { animation: shine 8s linear infinite; }\" >> src/app/globals.css",
+			"args": [],
+			"group": "none"
+		}
+	]
+}

@@ -1,0 +1,2226 @@
+=== DIRECTORY STRUCTURE ===
+unified-excellence-web/
+    next-env.d.ts
+    next.config.ts
+    package-lock.json
+    package.json
+    tailwind.config.ts
+    tsconfig.json
+    src/
+        app/
+            globals.css
+            layout.tsx
+            page.tsx
+            about/
+                page.tsx
+            careers/
+                page.tsx
+            clients/
+                page.tsx
+            contact/
+                page.tsx
+            creative/
+                page.tsx
+            industries/
+                page.tsx
+            services/
+                page.tsx
+                [id]/
+                    page.tsx
+        components/
+            CustomCursor.tsx
+            Magnetic.tsx
+            Noise.tsx
+            SmoothScroll.tsx
+            layout/
+                Footer.tsx
+                Navbar.tsx
+            sections/
+                About.tsx
+                Hero.tsx
+                Industries.tsx
+                Services.tsx
+            ui/
+                Button.tsx
+                Card.tsx
+                Marquee.tsx
+                Scene3D.tsx
+                SpotlightCard.tsx
+                Terminal.tsx
+        lib/
+            constants.ts
+            utils.ts
+        styles/
+        types/
+
+=== FILE CONTENT PREVIEW ===
+
+--- START: src\app\globals.css ---
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Hard-forcing the Navy & Gold Theme */
+    --background: 218 74% 11%;
+    /* #07162f */
+    --foreground: 43 68% 95%;
+    /* Off-White */
+
+    --card: 218 74% 13%;
+    --card-foreground: 43 68% 95%;
+
+    --popover: 218 74% 11%;
+    --popover-foreground: 43 68% 95%;
+
+    --primary: 43 68% 60%;
+    /* #dfb755 (GOLD) */
+    --primary-foreground: 218 74% 11%;
+    /* Navy */
+
+    --secondary: 218 50% 20%;
+    --secondary-foreground: 43 68% 95%;
+
+    --muted: 218 30% 25%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 43 68% 60%;
+    --accent-foreground: 218 74% 11%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 43 68% 95%;
+
+    --border: 218 30% 25%;
+    --input: 218 30% 25%;
+    --ring: 43 68% 60%;
+
+    --radius: 0.5rem;
+  }
+}
+
+/* Ensure background color is applied globally */
+body {
+  background-color: #07162f;
+  /* Fallback */
+  color: white;
+}
+
+--- END: src\app\globals.css ---
+
+--- START: src\app\layout.tsx ---
+import { Navbar } from "@/components/layout/Navbar"; // <--- Import Navbar
+import Noise from "@/components/Noise";
+import SmoothScroll from "@/components/SmoothScroll";
+import type { Metadata } from "next";
+import { Inter, Playfair_Display } from "next/font/google";
+import "./globals.css";
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
+
+export const metadata: Metadata = {
+  title: "Magnivida Securitas | Premium Workforce & Facility Solutions",
+  description: "CMMI Level 5 certified security and manpower services. Protecting the Great Life.",
+};
+
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en" className="dark">
+      <body className={`${inter.variable} ${playfair.variable} bg-background text-foreground antialiased`}>
+
+        <Noise />
+<SmoothScroll>
+        <Navbar /> {/* <--- Place Navbar here, outside/above children */}
+        {children}
+        </SmoothScroll>
+      </body>
+    </html>
+  );
+}
+
+--- END: src\app\layout.tsx ---
+
+--- START: src\app\page.tsx ---
+import { Footer } from "@/components/layout/Footer";
+import { About } from "@/components/sections/About";
+import { Hero } from "@/components/sections/Hero";
+import { Industries } from "@/components/sections/Industries";
+import { Services } from "@/components/sections/Services";
+import { ClientMarquee } from "@/components/ui/Marquee"; // New Import
+
+export default function Home() {
+  return (
+    <main className="min-h-screen pt-24 bg-background text-foreground selection:bg-primary selection:text-black">
+      <Hero />
+      <ClientMarquee /> {/* Placed here for high visibility */}
+      <Services />
+      <About />
+      <Industries />
+      <Footer />
+    </main>
+  );
+}
+
+--- END: src\app\page.tsx ---
+
+--- START: src\app\about\page.tsx ---
+"use client";
+
+import { Footer } from "@/components/layout/Footer";
+import { Button } from "@/components/ui/Button";
+import { motion } from "framer-motion";
+import { CheckCircle, Shield, TrendingUp, Users, Zap } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+
+export default function AboutPage() {
+  return (
+    <main className="min-h-screen bg-background">
+
+      {/* 1. HERO SECTION */}
+      <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop"
+            alt="Modern Office"
+            fill
+            className="object-cover opacity-30"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/60 to-background" />
+        </div>
+
+        <div className="container relative z-10 px-4 text-center">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-5xl md:text-7xl font-serif font-bold mb-6"
+          >
+            New Vision. <span className="text-primary">Modern Execution.</span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-xl text-zinc-300 max-w-2xl mx-auto"
+          >
+            Redefining facility management and security with a fresh, tech-forward approach. Backed by the operational expertise of Unified Excellence LLP.
+          </motion.p>
+        </div>
+      </section>
+
+      {/* 2. THE STORY (Fresh Perspective) */}
+      <section className="py-24 container px-4 md:px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="relative h-[500px] rounded-3xl overflow-hidden border border-white/10 shadow-2xl"
+          >
+             <Image
+              src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2032&auto=format&fit=crop"
+              alt="Team Collaboration"
+              fill
+              className="object-cover hover:scale-105 transition-transform duration-700"
+            />
+          </motion.div>
+
+          <motion.div
+             initial={{ opacity: 0, x: 20 }}
+             whileInView={{ opacity: 1, x: 0 }}
+             viewport={{ once: true }}
+          >
+            <div className="flex items-center gap-2 text-primary mb-4">
+               <Zap size={20} />
+               <span className="text-sm font-bold tracking-widest uppercase">The Agile Advantage</span>
+            </div>
+            <h2 className="text-3xl md:text-5xl font-serif font-bold mb-6">
+              Why We Are Different.
+            </h2>
+            <div className="space-y-6 text-zinc-400 text-lg leading-relaxed">
+              <p>
+                In an industry crowded with legacy giants running on outdated systems, Magnivida Securitas emerges as the **modern alternative**. We don&apos;t carry the baggage of &quot;how it&apos;s always been done.&quot; Instead, we ask, &quot;how can it be done better?&quot;
+              </p>
+              <p>
+                As a specialized arm of **Unified Excellence LLP**, we combine the agility of a startup with the structured processes of an established player. We are lean, we are fast, and we are obsessed with client satisfaction.
+              </p>
+              <p className="text-white font-medium border-l-4 border-primary pl-4">
+                We replace paper logs with digital dashboards. We replace reactive fixes with proactive maintenance. We are the new standard.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* 3. CORE VALUES */}
+      <section className="py-24 bg-surface-100/30 border-y border-white/5">
+        <div className="container px-4 md:px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-serif font-bold mb-4">Our Driving Principles</h2>
+            <p className="text-zinc-400">The values that power our growth and your safety.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { icon: TrendingUp, title: "Efficiency", desc: "Optimizing every process to save you time and cost." },
+              { icon: Shield, title: "Vigilance", desc: "Proactive security measures that never sleep." },
+              { icon: Users, title: "People First", desc: "Invested in the training and welfare of our ground staff." },
+              { icon: CheckCircle, title: "Transparency", desc: "Honest reporting. No hidden clauses. No surprises." }
+            ].map((value, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-black/40 p-6 rounded-2xl border border-white/10 hover:border-primary/50 transition-colors text-center group"
+              >
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary mx-auto mb-4 group-hover:bg-primary group-hover:text-[#07162f] transition-all">
+                  <value.icon size={24} />
+                </div>
+                <h3 className="text-lg font-bold text-white mb-2">{value.title}</h3>
+                <p className="text-zinc-400 text-sm">{value.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 4. CTA */}
+      <section className="py-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-primary/5"></div>
+        <div className="container relative z-10 text-center px-4">
+          <h2 className="text-4xl font-serif font-bold mb-6">Ready for a Better Partner?</h2>
+          <p className="text-zinc-400 mb-8 max-w-xl mx-auto">
+            Experience the difference of working with a facility management team that actually cares.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Link href="/contact">
+              <Button className="px-8 py-6 text-lg">Get a Proposal</Button>
+            </Link>
+            <Link href="/services">
+              <Button variant="outline" className="px-8 py-6 text-lg">Explore Capabilities</Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </main>
+  );
+}
+
+--- END: src\app\about\page.tsx ---
+
+--- START: src\app\careers\page.tsx ---
+// "use client";
+
+// import { Footer } from "@/components/layout/Footer";
+// import { Button } from "@/components/ui/Button";
+// import { OPEN_POSITIONS } from "@/lib/constants";
+// import { motion } from "framer-motion";
+// import { Briefcase, Clock, MapPin } from "lucide-react";
+
+// export default function CareersPage() {
+//   return (
+//     <main className="min-h-screen bg-background">
+//       <div className="pt-32 pb-20 container px-4 md:px-6">
+
+//         {/* Header */}
+//         <motion.div
+//           initial={{ opacity: 0, y: 20 }}
+//           animate={{ opacity: 1, y: 0 }}
+//           className="text-center mb-20"
+//         >
+//           <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6">
+//             Join the <span className="text-primary">Vanguard</span>
+//           </h1>
+//           <p className="text-zinc-400 max-w-2xl mx-auto text-lg">
+//             We are always looking for disciplined, skilled, and ambitious individuals to join our 3800% growth journey.
+//           </p>
+//         </motion.div>
+
+//         {/* Job Board Grid */}
+//         <div className="grid gap-4 max-w-4xl mx-auto">
+//           {OPEN_POSITIONS.map((job, i) => (
+//             <motion.div
+//               key={job.id}
+//               initial={{ opacity: 0, x: -10 }}
+//               animate={{ opacity: 1, x: 0 }}
+//               transition={{ delay: i * 0.1 }}
+//               className="group p-6 rounded-xl border border-white/10 bg-surface-100/50 hover:border-primary/50 transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
+//             >
+//               <div>
+//                 <h3 className="text-xl font-bold text-white group-hover:text-primary transition-colors">
+//                   {job.role}
+//                 </h3>
+//                 <div className="flex flex-wrap gap-4 mt-2 text-sm text-zinc-400">
+//                   <span className="flex items-center gap-1"><Briefcase size={14} /> {job.department}</span>
+//                   <span className="flex items-center gap-1"><MapPin size={14} /> {job.location}</span>
+//                   <span className="flex items-center gap-1"><Clock size={14} /> {job.type}</span>
+//                 </div>
+//               </div>
+//               <Button variant="outline" size="sm">Apply Now</Button>
+//             </motion.div>
+//           ))}
+//         </div>
+
+//         {/* No Roles Callout */}
+//         <div className="mt-16 text-center p-8 rounded-2xl bg-gradient-to-b from-surface-100 to-transparent border border-white/5">
+//           <h3 className="text-xl font-bold text-white mb-2">Dont see your role?</h3>
+//           <p className="text-zinc-400 mb-6">
+//             Send your resume to our HR department. We are constantly deploying new teams.
+//           </p>
+//           <a href="mailto:hr@unifiedexcellence.com">
+//              <Button>Email HR</Button>
+//           </a>
+//         </div>
+
+//       </div>
+//       <Footer />
+//     </main>
+//   );
+// }
+
+--- END: src\app\careers\page.tsx ---
+
+--- START: src\app\clients\page.tsx ---
+"use client";
+
+import { motion } from "framer-motion";
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
+import { CLIENTS_LIST } from "@/lib/constants";
+import { CheckCircle } from "lucide-react";
+
+export default function ClientsPage() {
+  return (
+    <main className="min-h-screen bg-background">
+      <div className="pt-32 pb-16 container px-4 md:px-6">
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-20"
+        >
+          <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6">
+            Trusted by the <span className="text-primary">Nations Best</span>
+          </h1>
+          <p className="text-zinc-400 max-w-2xl mx-auto text-lg">
+            From defense laboratories to Fortune 500 boardrooms, our operational excellence powers the organizations that power India.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {CLIENTS_LIST.map((sector, i) => (
+                <motion.div
+                    key={sector.category}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.2 }}
+                    className="bg-surface-100/50 border border-white/10 rounded-2xl p-8"
+                >
+                    <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                        <span className="w-1 h-6 bg-primary rounded-full"/>
+                        {sector.category}
+                    </h3>
+                    <ul className="space-y-4">
+                        {sector.names.map((client) => (
+                            <li key={client} className="flex items-center gap-3 text-zinc-400">
+                                <CheckCircle className="text-primary w-4 h-4 shrink-0" />
+                                <span>{client}</span>
+                            </li>
+                        ))}
+                    </ul>
+                </motion.div>
+            ))}
+        </div>
+      </div>
+      <Footer />
+    </main>
+  );
+}
+
+--- END: src\app\clients\page.tsx ---
+
+--- START: src\app\contact\page.tsx ---
+"use client";
+
+import { Footer } from "@/components/layout/Footer";
+import { Button } from "@/components/ui/Button";
+import { COMPANY_INFO, SERVICES } from "@/lib/constants";
+import { motion } from "framer-motion";
+import { Mail, MapPin, Phone, Send } from "lucide-react";
+import { useMemo, useState } from "react";
+
+type FormState = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  service: string;
+  message: string;
+};
+
+export default function ContactPage() {
+  const phone = COMPANY_INFO?.contact?.phone ?? "";
+  const emailTo = COMPANY_INFO?.contact?.email ?? "info@yourdomain.com";
+  const address = COMPANY_INFO?.contact?.address ?? "";
+
+  const serviceOptions = useMemo(() => {
+    // If SERVICES exists and has titles/ids, use it; otherwise fallback.
+    if (Array.isArray(SERVICES) && SERVICES.length) {
+      return SERVICES.map((s: any) => ({
+        value: s?.id ?? s?.title ?? "service",
+        label: s?.title ?? "Service",
+      }));
+    }
+    return [
+      { value: "manpower-staffing", label: "Manpower / Staffing" },
+      { value: "security-services", label: "Security Services" },
+      { value: "facility-management", label: "Facility Management" },
+      { value: "other", label: "Other" },
+    ];
+  }, []);
+
+  const [form, setForm] = useState<FormState>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    service: serviceOptions[0]?.value ?? "service",
+    message: "",
+  });
+
+  const [error, setError] = useState<string | null>(null);
+
+  const safePhoneForTel = useMemo(() => phone.replace(/[^\d+]/g, ""), [phone]);
+
+  function update<K extends keyof FormState>(key: K, value: FormState[K]) {
+    setForm((prev) => ({ ...prev, [key]: value }));
+  }
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+
+    if (!form.email.trim()) {
+      setError("Please enter your work email.");
+      return;
+    }
+
+    const subject = `Quote Request — ${form.service || "Service"}`;
+    const bodyLines = [
+      "New quote request received:",
+      "",
+      `Name: ${form.firstName} ${form.lastName}`.trim(),
+      `Work Email: ${form.email}`,
+      `Service Required: ${form.service}`,
+      "",
+      "Message:",
+      form.message || "(No message provided)",
+      "",
+      "— Sent from Magnivida website contact form",
+    ];
+
+    const mailto = `mailto:${encodeURIComponent(emailTo)}?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
+
+    window.location.href = mailto;
+  }
+
+  return (
+    <main className="min-h-screen bg-background">
+      <div className="pt-32 pb-20 container px-4 md:px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          {/* Left: Info */}
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
+            <h1 className="text-4xl md:text-5xl font-heading font-bold mb-6">
+              Lets Talk <span className="text-primary">Scale.</span>
+            </h1>
+            <p className="text-zinc-400 text-lg mb-12">
+              Ready to deploy a workforce or secure your facility? Our deployment team is on standby 24/7.
+            </p>
+
+            <div className="space-y-8">
+              <div className="flex items-start gap-4">
+                <div className="p-3 bg-primary/10 rounded-lg text-primary">
+                  <Phone size={24} />
+                </div>
+                <div>
+                  <h3 className="text-white font-bold text-lg">Phone</h3>
+                  {safePhoneForTel ? (
+                    <a className="text-zinc-400 hover:text-primary transition-colors" href={`tel:${safePhoneForTel}`}>
+                      {phone}
+                    </a>
+                  ) : (
+                    <p className="text-zinc-400">{phone}</p>
+                  )}
+                  <p className="text-zinc-500 text-sm mt-1">Mon-Sat, 9am - 7pm IST</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="p-3 bg-primary/10 rounded-lg text-primary">
+                  <Mail size={24} />
+                </div>
+                <div>
+                  <h3 className="text-white font-bold text-lg">Email</h3>
+                  <a className="text-zinc-400 hover:text-primary transition-colors" href={`mailto:${emailTo}`}>
+                    {emailTo}
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="p-3 bg-primary/10 rounded-lg text-primary">
+                  <MapPin size={24} />
+                </div>
+                <div>
+                  <h3 className="text-white font-bold text-lg">Headquarters</h3>
+                  <p className="text-zinc-400 max-w-xs">{address}</p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right: Form */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 }}
+            className="bg-surface-100 p-8 rounded-3xl border border-white/10"
+          >
+            <form className="space-y-6" onSubmit={handleSubmit}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-zinc-300">First Name</label>
+                  <input
+                    value={form.firstName}
+                    onChange={(e) => update("firstName", e.target.value)}
+                    type="text"
+                    className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none transition-colors"
+                    placeholder="John"
+                    autoComplete="given-name"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-zinc-300">Last Name</label>
+                  <input
+                    value={form.lastName}
+                    onChange={(e) => update("lastName", e.target.value)}
+                    type="text"
+                    className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none transition-colors"
+                    placeholder="Doe"
+                    autoComplete="family-name"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-zinc-300">Work Email</label>
+                <input
+                  value={form.email}
+                  onChange={(e) => update("email", e.target.value)}
+                  type="email"
+                  required
+                  className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none transition-colors"
+                  placeholder="john@company.com"
+                  autoComplete="email"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-zinc-300">Service Required</label>
+                <select
+                  value={form.service}
+                  onChange={(e) => update("service", e.target.value)}
+                  className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none transition-colors"
+                >
+                  {serviceOptions.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-zinc-300">Message</label>
+                <textarea
+                  value={form.message}
+                  onChange={(e) => update("message", e.target.value)}
+                  rows={4}
+                  className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none transition-colors"
+                  placeholder="Tell us about your requirements..."
+                />
+              </div>
+
+              {error ? <p className="text-sm text-red-400">{error}</p> : null}
+
+              <Button type="submit" className="w-full gap-2">
+                Send Request <Send size={16} />
+              </Button>
+
+              <p className="text-xs text-zinc-500">
+                Clicking “Send Request” opens your email app with the message pre-filled (fastest way to make it functional without backend).
+              </p>
+            </form>
+          </motion.div>
+        </div>
+      </div>
+
+      <Footer />
+    </main>
+  );
+}
+
+--- END: src\app\contact\page.tsx ---
+
+--- START: src\app\creative\page.tsx ---
+"use client";
+
+import Magnetic from "@/components/Magnetic";
+import { Billboard, Environment, Float, OrbitControls, QuadraticBezierLine, Text } from "@react-three/drei";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Bloom, EffectComposer } from "@react-three/postprocessing";
+import { useMemo, useRef } from "react";
+import * as THREE from "three";
+
+// --- 1. DATA: Network with Smart Offsets ---
+// Offsets move the TEXT without moving the DOT to prevent overlapping
+const LOCATIONS = [
+  { name: "Delhi (HQ)", lat: 28.6139, lon: 77.2090, isHQ: true, offset: [0, 0.08, 0] },
+  { name: "Mumbai", lat: 19.0760, lon: 72.8777, offset: [-0.08, 0.05, 0] },
+  { name: "Chennai", lat: 13.0827, lon: 80.2707, offset: [0.08, 0.05, 0] },
+  { name: "Hyderabad", lat: 17.3850, lon: 78.4867, offset: [0, 0.12, 0] },    // Shifted UP
+  { name: "Bangalore", lat: 12.9716, lon: 77.5946, offset: [0, -0.08, 0] },   // Shifted DOWN
+  { name: "Kolkata", lat: 22.5726, lon: 88.3639, offset: [0.08, 0.05, 0] },
+];
+
+// --- 2. UTILS: Math for 3D Positioning ---
+function latLonToVector3(lat: number, lon: number, radius: number) {
+  const phi = (90 - lat) * (Math.PI / 180);
+  const theta = (lon + 180) * (Math.PI / 180);
+  const x = -(radius * Math.sin(phi) * Math.cos(theta));
+  const z = (radius * Math.sin(phi) * Math.sin(theta));
+  const y = (radius * Math.cos(phi));
+  return new THREE.Vector3(x, y, z);
+}
+
+// --- 3. COMPONENT: The Network Layer ---
+function NetworkLayer({ radius }: { radius: number }) {
+  const hqPos = useMemo(() => latLonToVector3(28.6139, 77.2090, radius), [radius]);
+
+  return (
+    <group rotation={[0, -Math.PI / 2, 0]}>
+      {/* A. CONNECTING ARCS */}
+      {LOCATIONS.map((loc, i) => {
+        if (loc.isHQ) return null;
+        const end = latLonToVector3(loc.lat, loc.lon, radius);
+        // Curve the line outward
+        const mid = hqPos.clone().add(end).multiplyScalar(0.5).normalize().multiplyScalar(radius + 0.5);
+
+        return (
+          <QuadraticBezierLine
+            key={`line-${i}`}
+            start={hqPos}
+            end={end}
+            mid={mid}
+            color="#00ffff" // Electric Cyan
+            lineWidth={1}
+            transparent
+            opacity={0.3} // Subtle lines
+          />
+        );
+      })}
+
+      {/* B. MARKERS & LABELS */}
+      {LOCATIONS.map((loc, i) => {
+        const pos = latLonToVector3(loc.lat, loc.lon, radius);
+        return (
+          <group key={`marker-${i}`} position={pos}>
+            {/* The Dot */}
+            <mesh>
+              <sphereGeometry args={[0.025, 16, 16]} />
+              <meshBasicMaterial color={loc.isHQ ? "#ff0080" : "#00ffff"} toneMapped={false} />
+            </mesh>
+
+            {/* The Label */}
+            <Billboard>
+              <Text
+                // @ts-ignore
+                position={loc.offset}
+                fontSize={0.07} // Small, clean text
+                color="white"
+                anchorX="center"
+                anchorY="middle"
+                outlineWidth={0.005}
+                outlineColor="black"
+                font="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hjp-Ek-_EeA.woff"
+              >
+                {loc.name.toUpperCase()}
+              </Text>
+            </Billboard>
+          </group>
+        );
+      })}
+    </group>
+  );
+}
+
+// --- 4. COMPONENT: The Black Marble ---
+function DarkGlobe() {
+  const globeRef = useRef<THREE.Group>(null!);
+
+  useFrame((state, delta) => {
+    // Slow, heavy rotation
+    globeRef.current.rotation.y += delta * 0.05;
+  });
+
+  return (
+    <group ref={globeRef}>
+      <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.5}>
+        {/* The Sphere Surface */}
+        <mesh>
+            <sphereGeometry args={[2, 64, 64]} />
+            <meshStandardMaterial
+                color="#080808" // Matte Black
+                metalness={0.5}
+                roughness={0.7}
+            />
+        </mesh>
+
+        {/* Subtle Tech Grid Overlay */}
+        <mesh>
+             <sphereGeometry args={[2.01, 32, 32]} />
+             <meshBasicMaterial color="#333" wireframe transparent opacity={0.05} />
+        </mesh>
+
+        <NetworkLayer radius={2} />
+      </Float>
+    </group>
+  );
+}
+
+// --- 5. MAIN PAGE ---
+export default function CreativePage() {
+  return (
+    <div className="relative w-full h-screen bg-black text-white overflow-hidden">
+
+      {/* 3D SCENE */}
+      <div className="absolute inset-0 z-0">
+        <Canvas camera={{ position: [0, 0, 5.5], fov: 45 }} gl={{ antialias: false }}>
+          <Environment preset="city" />
+
+          {/* Lighting optimized for dark mode */}
+          <ambientLight intensity={0.1} />
+          <spotLight position={[10, 10, -5]} intensity={5} color="#0066ff" angle={0.5} />
+          <spotLight position={[-10, -10, -5]} intensity={5} color="#ff0080" angle={0.5} />
+
+          <DarkGlobe />
+
+          {/* Post-Processing */}
+          <EffectComposer disableNormalPass>
+            <Bloom luminanceThreshold={0} mipmapBlur intensity={1} radius={0.5} />
+          </EffectComposer>
+
+          <OrbitControls enableZoom={false} enablePan={false} minPolarAngle={Math.PI / 2.5} maxPolarAngle={Math.PI / 1.5} />
+        </Canvas>
+      </div>
+
+      {/* HTML CONTENT */}
+      <main className="relative z-10 flex flex-col items-center justify-center h-full pointer-events-none">
+        <div className="pointer-events-auto p-20">
+          <Magnetic strength={0.3}>
+            <h1 className="text-8xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-600">
+              UNIFIED
+            </h1>
+          </Magnetic>
+        </div>
+        <p className="text-xs tracking-[0.3em] text-gray-500 mt-4 font-mono">
+            LIVE NETWORK STATUS: ACTIVE
+        </p>
+      </main>
+
+    </div>
+  );
+}
+
+--- END: src\app\creative\page.tsx ---
+
+--- START: src\app\industries\page.tsx ---
+"use client";
+
+import { Footer } from "@/components/layout/Footer";
+import { Industries } from "@/components/sections/Industries"; // Reusing your existing section
+import { motion } from "framer-motion";
+
+export default function IndustriesPage() {
+  return (
+    <main className="bg-[#07162f] min-h-screen pt-24">
+
+      {/* Header Section */}
+      <div className="container px-4 py-16 text-center">
+        <motion.span
+           initial={{ opacity: 0 }}
+           animate={{ opacity: 1 }}
+           className="text-[#dfb755] tracking-[0.3em] text-sm font-bold uppercase"
+        >
+          Sectors We Serve
+        </motion.span>
+        <motion.h1
+           initial={{ opacity: 0, y: 20 }}
+           animate={{ opacity: 1, y: 0 }}
+           className="text-5xl md:text-6xl font-serif text-white mt-4 mb-6"
+        >
+           Industry <span className="text-[#dfb755]">Expertise</span>
+        </motion.h1>
+        <p className="text-zinc-400 max-w-2xl mx-auto text-lg">
+           From high-security defense labs to bustling corporate parks, our specialized teams are deployed across critical sectors.
+        </p>
+      </div>
+
+      {/* The Actual Industries Grid */}
+      <div className="pb-20">
+        <Industries />
+      </div>
+
+      <Footer />
+    </main>
+  );
+}
+
+--- END: src\app\industries\page.tsx ---
+
+--- START: src\app\services\page.tsx ---
+"use client";
+
+import { Footer } from "@/components/layout/Footer";
+import { Services } from "@/components/sections/Services"; // Reusing your detailed Services component
+import { motion } from "framer-motion";
+
+export default function ServicesPage() {
+  return (
+    <main className="bg-[#07162f] min-h-screen pt-24">
+
+      <div className="container px-4 pt-10 pb-20 text-center">
+         <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-5xl md:text-6xl font-serif text-white mb-4"
+          >
+            Our <span className="text-[#dfb755]">Capabilities</span>
+          </motion.h1>
+          <p className="text-zinc-400 max-w-2xl mx-auto">
+            Comprehensive workforce and facility solutions designed for scale.
+          </p>
+      </div>
+
+      {/* This renders the "Menu List" we built earlier */}
+      <Services />
+
+      <Footer />
+    </main>
+  );
+}
+
+--- END: src\app\services\page.tsx ---
+
+--- START: src\app\services\[id]\page.tsx ---
+"use client";
+
+import { Footer } from "@/components/layout/Footer";
+import { Button } from "@/components/ui/Button";
+import { SERVICES } from "@/lib/constants"; // <--- Import only SERVICES
+import { motion } from "framer-motion";
+import { ArrowLeft, CheckCircle2 } from "lucide-react";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+
+export default function ServiceDetail() {
+  const params = useParams();
+  const serviceId = params.id as string;
+
+  // Find the service in the main SERVICES array
+  const service = SERVICES.find((s) => s.id === serviceId);
+
+  if (!service) {
+    return (
+        <div className="min-h-screen bg-[#07162f] flex flex-col items-center justify-center text-white">
+            <h1 className="text-4xl font-serif mb-4">Service Not Found</h1>
+            <Link href="/services"><Button>Back to Services</Button></Link>
+        </div>
+    )
+  }
+
+  // Generate generic benefits/features since we don't have deep data yet
+  // This ensures the page looks full even with simple data
+  const benefits = [
+    "24/7 Operational Support",
+    "Compliance & Liability Management",
+    "Trained & Vetted Personnel",
+    "Modern Reporting Dashboards",
+    "Cost-Effective Service Models"
+  ];
+
+  return (
+    <main className="min-h-screen bg-[#07162f]">
+
+      {/* 1. HERO HEADER */}
+      <section className="relative pt-40 pb-20 px-4 md:px-6 container overflow-hidden">
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+
+        <Link href="/services" className="inline-flex items-center text-zinc-400 hover:text-white mb-8 transition-colors group">
+            <ArrowLeft size={16} className="mr-2 group-hover:-translate-x-1 transition-transform" /> Back to Services
+        </Link>
+
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+            <div className="w-16 h-16 bg-white/5 rounded-xl flex items-center justify-center text-[#dfb755] mb-6 border border-white/10">
+                <service.icon size={32} />
+            </div>
+            <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-6">
+                {service.title}
+            </h1>
+            <p className="text-xl text-zinc-400 max-w-2xl leading-relaxed">
+                {service.description}
+            </p>
+        </motion.div>
+      </section>
+
+      {/* 2. DETAILS & BENEFITS */}
+      <section className="py-20 bg-black/20 border-t border-white/5">
+         <div className="container px-4 md:px-6 grid grid-cols-1 lg:grid-cols-2 gap-16">
+
+            {/* Left: Description */}
+            <div>
+                <h3 className="text-2xl font-bold text-white mb-6">Overview</h3>
+                <p className="text-zinc-400 leading-relaxed mb-8">
+                    Magnivida Securitas provides industry-leading {service.title.toLowerCase()} tailored to the unique needs of modern businesses.
+                    We move beyond traditional vendor relationships to become a strategic partner in your operational success.
+                </p>
+                <Link href="/contact">
+                    <Button className="px-8">Get a Quote for {service.title}</Button>
+                </Link>
+            </div>
+
+            {/* Right: Key Benefits List */}
+            <div className="bg-surface-100 p-8 rounded-2xl border border-white/10">
+                <h3 className="text-xl font-bold text-white mb-6">Key Advantages</h3>
+                <div className="space-y-4">
+                    {benefits.map((benefit, i) => (
+                        <div key={i} className="flex items-start gap-3">
+                            <CheckCircle2 className="text-[#dfb755] mt-1 shrink-0" size={18} />
+                            <span className="text-zinc-300">{benefit}</span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+         </div>
+      </section>
+
+      <Footer />
+    </main>
+  );
+}
+
+--- END: src\app\services\[id]\page.tsx ---
+
+--- START: src\components\CustomCursor.tsx ---
+"use client";
+
+import gsap from "gsap";
+import { useEffect, useRef } from "react";
+
+export default function CustomCursor() {
+  const cursorRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // 1. Move the cursor based on mouse position
+    const moveCursor = (e: MouseEvent) => {
+      gsap.to(cursorRef.current, {
+        x: e.clientX,
+        y: e.clientY,
+        duration: 0.5, // The "lag" makes it feel fluid
+        ease: "power2.out",
+      });
+    };
+
+    window.addEventListener("mousemove", moveCursor);
+
+    // 2. Hide default cursor
+    document.body.style.cursor = "none";
+
+    return () => {
+      window.removeEventListener("mousemove", moveCursor);
+      document.body.style.cursor = "auto";
+    };
+  }, []);
+
+  return (
+    <div
+      ref={cursorRef}
+      className="fixed top-0 left-0 w-8 h-8 bg-white rounded-full pointer-events-none z-50 mix-blend-difference -translate-x-1/2 -translate-y-1/2"
+    />
+  );
+}
+
+--- END: src\components\CustomCursor.tsx ---
+
+--- START: src\components\Magnetic.tsx ---
+"use client";
+
+import { motion } from "framer-motion";
+import React, { useRef, useState } from "react";
+
+export default function Magnetic({ children }: { children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouse = (e: React.MouseEvent) => {
+    const { clientX, clientY } = e;
+    const { height, width, left, top } = ref.current!.getBoundingClientRect();
+    const middleX = clientX - (left + width / 2);
+    const middleY = clientY - (top + height / 2);
+    setPosition({ x: middleX * 0.2, y: middleY * 0.2 });
+  };
+
+  const reset = () => {
+    setPosition({ x: 0, y: 0 });
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouse}
+      onMouseLeave={reset}
+      animate={{ x: position.x, y: position.y }}
+      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+--- END: src\components\Magnetic.tsx ---
+
+--- START: src\components\Noise.tsx ---
+export default function Noise() {
+  return (
+    <div className="fixed inset-0 z-40 pointer-events-none opacity-[0.05] mix-blend-overlay">
+      <svg className="w-full h-full">
+        <filter id="noiseFilter">
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.8"
+            numOctaves="3"
+            stitchTiles="stitch"
+          />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#noiseFilter)" />
+      </svg>
+    </div>
+  );
+}
+
+--- END: src\components\Noise.tsx ---
+
+--- START: src\components\SmoothScroll.tsx ---
+"use client";
+
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Lenis from "lenis";
+import { useEffect } from "react";
+
+gsap.registerPlugin(ScrollTrigger);
+
+export default function SmoothScroll({ children }: { children: React.ReactNode }) {
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Exponential easing
+      smoothWheel: true,
+    });
+
+    // Synchronize Lenis with GSAP ScrollTrigger
+    lenis.on("scroll", ScrollTrigger.update);
+
+    // Integrate Lenis into GSAP's tick cycle
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+
+    // Disable GSAP's lag smoothing to prevent stuttering
+    gsap.ticker.lagSmoothing(0);
+
+    return () => {
+      lenis.destroy();
+      gsap.ticker.remove(lenis.raf);
+    };
+  }, []);
+
+  return <>{children}</>;
+}
+
+--- END: src\components\SmoothScroll.tsx ---
+
+--- START: src\components\layout\Footer.tsx ---
+"use client";
+
+import { COMPANY_INFO } from "@/lib/constants";
+import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, ShieldCheck, Twitter } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+
+export function Footer() {
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <footer className="bg-[#050e1d] border-t border-white/5 pt-20 pb-10 relative overflow-hidden">
+
+      {/* Background Decor */}
+      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#dfb755] to-transparent opacity-30" />
+
+      <div className="container px-4 md:px-6 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+
+          {/* 1. BRAND INFO */}
+          <div className="space-y-6">
+            <Link href="/" className="flex items-center gap-3">
+               <div className="relative w-12 h-12">
+                 <Image src="/logo.png" alt="Magnivida" fill className="object-contain" />
+               </div>
+               <div className="flex flex-col">
+                  <span className="text-xl font-serif font-bold text-white">MAGNIVIDA</span>
+                  <span className="text-[10px] tracking-[0.2em] text-[#dfb755] uppercase">Securitas Pvt Ltd</span>
+               </div>
+            </Link>
+            <p className="text-zinc-500 text-sm leading-relaxed">
+              CMMI Level 5 certified operational partners. Engineering the human systems that power India&apos;s most critical infrastructures.
+            </p>
+            <div className="flex gap-4">
+              <SocialIcon icon={Linkedin} href="#" />
+              <SocialIcon icon={Twitter} href="#" />
+              <SocialIcon icon={Facebook} href="#" />
+              <SocialIcon icon={Instagram} href="#" />
+            </div>
+          </div>
+
+          {/* 2. QUICK LINKS */}
+          <div>
+            <h4 className="text-white font-bold mb-6">Company</h4>
+            <ul className="space-y-4 text-sm text-zinc-400">
+              <li><Link href="/about" className="hover:text-[#dfb755] transition-colors">About Us</Link></li>
+              <li><Link href="/services" className="hover:text-[#dfb755] transition-colors">Our Services</Link></li>
+              <li><Link href="/industries" className="hover:text-[#dfb755] transition-colors">Industries</Link></li>
+              <li><Link href="/careers" className="hover:text-[#dfb755] transition-colors">Careers</Link></li>
+              <li><Link href="/contact" className="hover:text-[#dfb755] transition-colors">Contact</Link></li>
+            </ul>
+          </div>
+
+          {/* 3. CONTACT INFO */}
+          <div>
+            <h4 className="text-white font-bold mb-6">Contact</h4>
+            <ul className="space-y-4 text-sm text-zinc-400">
+              <li className="flex items-start gap-3">
+                <MapPin size={18} className="text-[#dfb755] mt-1 shrink-0" />
+                <span>{COMPANY_INFO?.contact?.address || "123, Corporate Park, New Delhi, India"}</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Phone size={18} className="text-[#dfb755] shrink-0" />
+                <span>{COMPANY_INFO?.contact?.phone || "+91 98765 43210"}</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Mail size={18} className="text-[#dfb755] shrink-0" />
+                <span>{COMPANY_INFO?.contact?.email || "contact@magnivida.com"}</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* 4. NEWSLETTER / CERTIFICATION */}
+          <div className="space-y-6">
+            <h4 className="text-white font-bold">Certifications</h4>
+            <div className="flex items-center gap-4 p-4 bg-white/5 rounded-lg border border-white/10">
+               <ShieldCheck size={32} className="text-[#dfb755]" />
+               <div>
+                  <p className="text-white font-bold text-sm">CMMI Level 5</p>
+                  <p className="text-xs text-zinc-500">Certified Partner</p>
+               </div>
+            </div>
+
+            <h4 className="text-white font-bold mt-6">Subscribe</h4>
+            <div className="flex gap-2">
+               <input
+                 type="email"
+                 placeholder="Email"
+                 className="bg-transparent border-b border-white/20 text-white text-sm py-2 px-1 focus:border-[#dfb755] outline-none w-full"
+               />
+               <button className="text-[#dfb755] font-bold text-sm uppercase hover:text-white transition-colors">Join</button>
+            </div>
+          </div>
+
+        </div>
+
+        {/* BOTTOM BAR */}
+        <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-zinc-600 text-xs">
+            © {currentYear} Magnivida Securitas Pvt Ltd. All rights reserved.
+          </p>
+          <div className="flex gap-6 text-xs text-zinc-600">
+            <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link href="#" className="hover:text-white transition-colors">Terms of Service</Link>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+// Helper Component for Social Icons
+function SocialIcon({ icon: Icon, href }: { icon: any, href: string }) {
+  return (
+    <Link
+      href={href}
+      className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-zinc-400 hover:bg-[#dfb755] hover:text-[#07162f] transition-all duration-300"
+    >
+      <Icon size={18} />
+    </Link>
+  );
+}
+
+--- END: src\components\layout\Footer.tsx ---
+
+--- START: src\components\layout\Navbar.tsx ---
+"use client";
+
+import { SERVICES } from "@/lib/constants"; // Import your services data
+import { motion, useMotionValueEvent, useScroll } from "framer-motion";
+import { ChevronDown, Menu, X } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import { Button } from "../ui/Button";
+
+const NAV_LINKS = [
+  { name: "Home", href: "/" },
+  { name: "Services", href: "/services", hasDropdown: true }, // Mark as dropdown
+  { name: "About", href: "/about" },
+  { name: "Industries", href: "/industries" },
+  { name: "Contact", href: "/contact" },
+];
+
+export function Navbar() {
+  const [isOpen, setIsOpen] = useState(false); // Mobile Menu State
+  const [hidden, setHidden] = useState(false); // Scroll Hide State
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null); // Dropdown State
+
+  const { scrollY } = useScroll();
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious() ?? 0;
+    if (latest > previous && latest > 150) setHidden(true);
+    else setHidden(false);
+  });
+
+  return (
+    <motion.nav
+      variants={{ visible: { y: 0 }, hidden: { y: "-100%" } }}
+      animate={hidden ? "hidden" : "visible"}
+      transition={{ duration: 0.35, ease: "easeInOut" }}
+      className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100 h-24 shadow-sm"
+    >
+      <div className="container mx-auto px-4 md:px-6 h-full flex items-center justify-between">
+
+        {/* LOGO */}
+        <Link href="/" className="flex items-center gap-4 group relative z-10">
+          <div className="relative w-16 h-16 md:w-20 md:h-20">
+            <Image src="/logo.png" alt="Magnivida Logo" fill sizes="200px" className="object-contain" priority />
+          </div>
+          <div className="flex flex-col justify-center">
+            <span className="text-2xl md:text-3xl font-serif font-bold tracking-wide text-[#07162f] leading-none">
+              MAGNIVIDA
+            </span>
+            <span className="text-[10px] md:text-xs font-sans tracking-[0.3em] text-[#dfb755] uppercase mt-1 font-semibold">
+              Securitas Pvt Ltd
+            </span>
+          </div>
+        </Link>
+
+        {/* DESKTOP LINKS */}
+        <div className="hidden lg:flex items-center gap-8">
+          {NAV_LINKS.map((link) => (
+            <div
+              key={link.name}
+              className="relative"
+              onMouseEnter={() => link.hasDropdown && setHoveredLink(link.name)}
+              onMouseLeave={() => link.hasDropdown && setHoveredLink(null)}
+            >
+              <Link
+                href={link.href}
+                className="flex items-center gap-1 text-base font-medium text-zinc-600 hover:text-[#dfb755] transition-colors py-4"
+              >
+                {link.name}
+                {link.hasDropdown && (
+                  <ChevronDown
+                    size={16}
+                    className={`transition-transform duration-300 ${hoveredLink === link.name ? "rotate-180 text-[#dfb755]" : ""}`}
+                  />
+                )}
+              </Link>
+
+              {/* DROPDOWN MENU */}
+              {link.hasDropdown && hoveredLink === link.name && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  className="absolute top-full left-1/2 -translate-x-1/2 w-64 bg-white shadow-xl border border-gray-100 rounded-xl overflow-hidden p-2"
+                >
+                  <div className="flex flex-col">
+                    {SERVICES.map((service) => (
+                      <Link
+                        key={service.id}
+                        href={`/services/${service.id}`}
+                        className="block px-4 py-3 text-sm text-zinc-600 hover:bg-[#dfb755]/10 hover:text-[#dfb755] rounded-lg transition-colors font-medium"
+                      >
+                        {service.title}
+                      </Link>
+                    ))}
+                    {/* View All Link */}
+                    <div className="border-t border-gray-100 mt-2 pt-2">
+                      <Link href="/services" className="block px-4 py-2 text-xs font-bold text-[#07162f] uppercase tracking-wider hover:underline">
+                        View All Services →
+                      </Link>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </div>
+          ))}
+
+          <Link href="/contact"> {/* <--- WRAP IN LINK */}
+  <Button className="bg-[#07162f] text-[#dfb755] hover:bg-[#dfb755] hover:text-[#07162f] font-bold px-6 py-5 text-lg transition-all shadow-md">
+    Get Quote
+  </Button>
+</Link>
+
+        </div>
+
+        {/* MOBILE MENU TOGGLE */}
+        <button className="lg:hidden text-[#07162f] p-2" onClick={() => setIsOpen(!isOpen)}>
+          {isOpen ? <X size={32} /> : <Menu size={32} />}
+        </button>
+      </div>
+
+      {/* MOBILE MENU (Simple Expansion) */}
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          className="lg:hidden border-t border-gray-100 bg-white absolute w-full shadow-xl overflow-y-auto max-h-[80vh]"
+        >
+          <div className="flex flex-col p-6 gap-6">
+            {NAV_LINKS.map((link) => (
+              <div key={link.name}>
+                <Link
+                  href={link.href}
+                  onClick={() => !link.hasDropdown && setIsOpen(false)}
+                  className="text-xl font-medium text-zinc-800 hover:text-[#dfb755] block mb-2"
+                >
+                  {link.name}
+                </Link>
+                {/* Mobile Submenu */}
+                {link.hasDropdown && (
+                  <div className="pl-4 border-l-2 border-gray-100 space-y-3 mt-2">
+                    {SERVICES.map((service) => (
+                      <Link
+                        key={service.id}
+                        href={`/services/${service.id}`}
+                        onClick={() => setIsOpen(false)}
+                        className="block text-sm text-zinc-500 hover:text-[#dfb755]"
+                      >
+                        {service.title}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+            <Link href="/contact"> {/* <--- WRAP IN LINK */}
+  <Button className="bg-[#07162f] text-[#dfb755] hover:bg-[#dfb755] hover:text-[#07162f] font-bold px-6 py-5 text-lg transition-all shadow-md">
+    Get Quote
+  </Button>
+</Link>
+
+          </div>
+        </motion.div>
+      )}
+    </motion.nav>
+  );
+}
+
+--- END: src\components\layout\Navbar.tsx ---
+
+--- START: src\components\sections\About.tsx ---
+"use client";
+
+import { motion } from "framer-motion";
+import { CheckCircle2, Zap } from "lucide-react";
+import Image from "next/image";
+
+const FEATURES = [
+  "Tech-Enabled Reporting",
+  "Zero-Liability Compliance",
+  "Modern Hygiene Protocols",
+  "Agile Response Teams"
+];
+
+export function About() {
+  return (
+    <section className="py-24 bg-[#050e1d] relative overflow-hidden">
+
+      {/* Background Decor */}
+      <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full -translate-y-1/2 pointer-events-none" />
+
+      <div className="container px-4 md:px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+          {/* LEFT: Text Content */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="text-[#dfb755] font-bold tracking-widest uppercase text-sm">Our Vision</span>
+            <h2 className="text-4xl md:text-5xl font-serif text-white mt-4 mb-6 leading-tight">
+              Built for the <br />
+              <span className="text-zinc-500">Future of Work.</span>
+            </h2>
+            <p className="text-zinc-400 text-lg leading-relaxed mb-8">
+              Magnivida Securitas was born from a simple observation: the facility management industry is stuck in the past. We are here to change that.
+              <br/><br/>
+              We represent a new generation of service partners—focused on **transparency, agility, and modern standards**. We don&apos;t just &quot;manage&quot; your facility; we care for it with the enthusiasm and attention to detail that only a dedicated, fresh team can provide.
+            </p>
+
+            {/* Feature List */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {FEATURES.map((feature, i) => (
+                <div key={i} className="flex items-center gap-3">
+                  <CheckCircle2 className="text-[#dfb755] shrink-0" size={20} />
+                  <span className="text-zinc-300 text-sm font-medium">{feature}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Stats Row (Removed "Clients" stat, focused on Commitment) */}
+            <div className="flex gap-12 mt-12 border-t border-white/10 pt-8">
+              <div>
+                <h4 className="text-3xl font-bold text-white">100%</h4>
+                <p className="text-zinc-500 text-xs uppercase tracking-wider mt-1">Compliance Record</p>
+              </div>
+              <div>
+                <h4 className="text-3xl font-bold text-white">24/7</h4>
+                <p className="text-zinc-500 text-xs uppercase tracking-wider mt-1">Support Access</p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* RIGHT: Visual */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="relative"
+          >
+            {/* Main Image Card */}
+            <div className="relative h-[600px] w-full rounded-2xl overflow-hidden border border-white/10 shadow-2xl group">
+              <Image
+                src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop"
+                alt="Modern Corporate Architecture"
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#07162f] via-[#07162f]/40 to-transparent opacity-80" />
+
+              {/* Floating "Energy" Card (Replaces "Gold Standard") */}
+              <div className="absolute bottom-8 left-8 right-8 bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-xl">
+                 <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-[#dfb755] flex items-center justify-center text-[#07162f] shadow-[0_0_15px_rgba(223,183,85,0.4)]">
+                       <Zap size={24} />
+                    </div>
+                    <div>
+                       <h3 className="text-white font-bold text-lg">Next-Gen Operations</h3>
+                       <p className="text-zinc-300 text-sm">Efficiency driven by modern protocols.</p>
+                    </div>
+                 </div>
+              </div>
+            </div>
+
+            {/* Decorative Corners */}
+            <div className="absolute -top-6 -right-6 w-24 h-24 border-t-2 border-r-2 border-[#dfb755]/30 rounded-tr-3xl" />
+            <div className="absolute -bottom-6 -left-6 w-24 h-24 border-b-2 border-l-2 border-[#dfb755]/30 rounded-bl-3xl" />
+
+          </motion.div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
+
+--- END: src\components\sections\About.tsx ---
+
+--- START: src\components\sections\Hero.tsx ---
+"use client";
+
+import { Button } from "@/components/ui/Button";
+import { Scene3D } from "@/components/ui/Scene3D";
+import { motion } from "framer-motion";
+import { ChevronRight, Sparkles } from "lucide-react"; // Changed ShieldCheck to Sparkles for "New/Fresh" vibe
+import Link from "next/link";
+
+export function Hero() {
+  return (
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#07162f] pt-20">
+
+      {/* 1. Background Effects */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#07162f] via-[#0b1d3b] to-[#07162f]" />
+
+        {/* The Premium 3D Gold Object */}
+        <Scene3D />
+
+        {/* CSS Grid Pattern (Subtle) */}
+        <div className="absolute inset-0 opacity-[0.03]"
+             style={{
+                backgroundImage: 'linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px)',
+                backgroundSize: '40px 40px'
+             }}
+        />
+
+        {/* Luxury Gold Glows */}
+        <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-primary/20 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-primary/10 blur-[120px] rounded-full" />
+      </div>
+
+      {/* 2. Main Content (Centered & Clean) */}
+      <div className="container relative z-10 px-4 md:px-6 text-center">
+
+        {/* Badge: New Standard */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-sm shadow-lg"
+        >
+          <Sparkles size={16} className="text-[#dfb755]" />
+          <span className="text-xs md:text-sm font-medium text-zinc-300 tracking-wider uppercase">
+            The New Standard in Facility Management
+          </span>
+        </motion.div>
+
+        {/* Headline */}
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-6 leading-tight drop-shadow-2xl"
+        >
+          Elevating Spaces. <br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#dfb755] via-[#f8f5eb] to-[#dfb755] drop-shadow-sm">
+            Empowering Operations.
+          </span>
+        </motion.h1>
+
+        {/* Subheadline */}
+        <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="text-lg md:text-2xl text-zinc-400 max-w-3xl mx-auto mb-10 leading-relaxed"
+        >
+          A fresh perspective on integrated facility management and security.
+          We combine modern efficiency with unwavering dedication to protect
+          and maintain your world.
+        </motion.p>
+
+        {/* Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+        >
+          <Link href="/services">
+            <Button className="h-14 px-8 text-lg bg-[#dfb755] text-[#07162f] hover:bg-white hover:scale-105 transition-all font-bold shadow-[0_0_20px_rgba(223,183,85,0.3)]">
+              View Capabilities
+            </Button>
+          </Link>
+
+          <Link href="/contact">
+            <Button variant="outline" className="h-14 px-8 text-lg border-white/20 text-white hover:bg-white/10 hover:border-white/50 group backdrop-blur-md">
+              Start a Conversation <ChevronRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
+        </motion.div>
+
+      </div>
+    </section>
+  );
+}
+
+--- END: src\components\sections\Hero.tsx ---
+
+--- START: src\components\sections\Industries.tsx ---
+"use client";
+
+import { SpotlightCard } from "@/components/ui/SpotlightCard";
+import { INDUSTRIES } from "@/lib/constants";
+import { motion } from "framer-motion";
+
+export function Industries() {
+  return (
+    <section id="industries" className="py-24 bg-black relative">
+       <div className="container px-4 md:px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">Industries We <span className="text-primary">Serve</span></h2>
+            <p className="text-zinc-400">Tailored staffing expertise for specialized sectors.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+             {INDUSTRIES.map((ind, i) => (
+                <motion.div
+
+                   key={i}
+                   initial={{ opacity: 0, y: 10 }}
+                   whileInView={{ opacity: 1, y: 0 }}
+                   viewport={{ once: true }}
+                   transition={{ delay: i * 0.1 }}
+                   className="p-6 rounded-xl bg-surface-100 border border-white/10 hover:border-primary/30 transition-colors"
+                >
+                    <SpotlightCard className="h-full p-8 bg-white/5 border-white/10">
+                   <div className="flex items-center gap-4 mb-4">
+                          <div className="w-2 h-8 bg-[#dfb755] rounded-full" />
+                          <h3 className="text-xl font-bold text-white">{ind.name}</h3>
+                       </div>
+                   <p className="text-zinc-400 text-sm">{ind.desc}</p>
+                   </SpotlightCard>
+                </motion.div>
+             ))}
+          </div>
+       </div>
+    </section>
+  )
+}
+
+--- END: src\components\sections\Industries.tsx ---
+
+--- START: src\components\sections\Services.tsx ---
+"use client";
+
+import { SERVICES } from "@/lib/constants";
+import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
+
+export function Services() {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  return (
+    <section id="services" className="bg-[#07162f] py-32 relative overflow-hidden">
+
+      {/* Background Decor */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+
+      <div className="container px-4 md:px-6">
+
+        {/* Header */}
+        <div className="mb-20 flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/10 pb-8">
+          <div>
+            <motion.span
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="text-primary font-sans text-sm tracking-[0.2em] uppercase"
+            >
+              Our Expertise
+            </motion.span>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="text-4xl md:text-6xl font-serif text-white mt-4"
+            >
+              Operational <span className="text-zinc-500">Mastery</span>
+            </motion.h2>
+          </div>
+          <p className="text-zinc-400 max-w-md text-sm md:text-base">
+            We don&apos;t just supply manpower. We engineer the human systems that power India&apos;s most critical infrastructures.
+          </p>
+        </div>
+
+        {/* The "Menu" List */}
+        <div className="flex flex-col">
+          {SERVICES.map((service, index) => (
+            <Link
+              key={service.title}
+              href={`/services/${service.id}`}
+              className="group relative"
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
+            >
+              {/* Row Container */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="flex flex-col md:flex-row items-start md:items-center justify-between py-12 border-b border-white/10 group-hover:border-primary/50 transition-colors duration-500"
+              >
+
+                {/* 01. Index Number */}
+                <span className="text-xs font-mono text-zinc-600 mb-4 md:mb-0 md:w-24 group-hover:text-primary transition-colors">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+
+                {/* 02. Title & Icon */}
+                <div className="flex-1 md:pr-12">
+                  <h3 className="text-3xl md:text-5xl font-serif text-white group-hover:text-primary transition-colors duration-300 flex items-center gap-4">
+                    {service.title}
+                    {/* Icon appears on hover */}
+                    <motion.span
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{
+                        opacity: hoveredIndex === index ? 1 : 0,
+                        scale: hoveredIndex === index ? 1 : 0.8
+                      }}
+                      className="hidden md:inline-flex"
+                    >
+                      <service.icon size={32} className="text-primary opacity-50" />
+                    </motion.span>
+                  </h3>
+                </div>
+
+                {/* 03. Description (Hidden on mobile, visible on desktop) */}
+                <div className="mt-4 md:mt-0 max-w-sm">
+                  <p className="text-zinc-500 group-hover:text-zinc-300 transition-colors">
+                    {service.description}
+                  </p>
+                </div>
+
+                {/* 04. Arrow Action */}
+                <div className="mt-6 md:mt-0 md:pl-12">
+                  <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all duration-300">
+                    <ArrowUpRight className="text-white group-hover:text-black transition-transform group-hover:rotate-45" />
+                  </div>
+                </div>
+
+              </motion.div>
+            </Link>
+          ))}
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
+--- END: src\components\sections\Services.tsx ---
+
+--- START: src\components\ui\Button.tsx ---
+import { cn } from "@/lib/utils";
+import { cva, type VariantProps } from "class-variance-authority";
+import { HTMLMotionProps, motion } from "framer-motion";
+import * as React from "react";
+
+// 1. Define Variants using CVA
+const buttonVariants = cva(
+  "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary disabled:pointer-events-none disabled:opacity-50 uppercase tracking-wider",
+  {
+    variants: {
+      variant: {
+        default: "bg-primary text-black hover:bg-primary/90 shadow-[0_0_15px_rgba(0,240,255,0.3)]", // Neon Glow
+        outline: "border border-surface-200 bg-transparent hover:bg-surface-100 text-foreground",
+        ghost: "hover:bg-surface-100 hover:text-primary",
+      },
+      size: {
+        default: "h-12 px-8 py-2",
+        sm: "h-9 rounded-md px-3",
+        lg: "h-14 rounded-md px-10 text-base",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+);
+
+// 2. Define Props Interface
+export interface ButtonProps
+  extends HTMLMotionProps<"button">, // Inherit Motion props for animation
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean;
+}
+
+// 3. The Component
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, ...props }, ref) => {
+    return (
+      <motion.button
+        ref={ref}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        className={cn(buttonVariants({ variant, size, className }))}
+        {...props}
+      />
+    );
+  }
+);
+Button.displayName = "Button";
+
+export { Button, buttonVariants };
+
+--- END: src\components\ui\Button.tsx ---
+
+--- START: src\components\ui\Card.tsx ---
+"use client";
+
+import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
+
+interface CardProps {
+  className?: string;
+  children: React.ReactNode;
+}
+
+export function Card({ className, children }: CardProps) {
+  return (
+    <motion.div
+      whileHover={{ y: -5 }}
+      className={cn(
+        "relative overflow-hidden rounded-2xl border border-white/10 bg-surface-100/50 p-6 backdrop-blur-sm transition-colors hover:bg-surface-100/80 hover:border-primary/30",
+        className
+      )}
+    >
+      {/* Subtle Noise Texture (Optional, adds grit) */}
+      <div className="absolute inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+
+      <div className="relative z-10 h-full">{children}</div>
+    </motion.div>
+  );
+}
+
+--- END: src\components\ui\Card.tsx ---
+
+--- START: src\components\ui\Marquee.tsx ---
+"use client";
+
+import { cn } from "@/lib/utils";
+import { Building2, FlaskConical, Landmark, Plane, ShieldCheck } from "lucide-react";
+import React from "react";
+
+// 1. Define the Client Logos (You can replace these with real images later)
+const CLIENTS = [
+  { name: "DRDO", icon: FlaskConical },
+  { name: "Indian Army", icon: ShieldCheck },
+  { name: "BPCL", icon: Building2 },
+  { name: "HDFC Bank", icon: Landmark },
+  { name: "GMR Airports", icon: Plane },
+  { name: "Sony India", icon: Building2 },
+  { name: "Indian Coast Guard", icon: ShieldCheck },
+];
+
+export const ClientMarquee = ({
+  className,
+  reverse,
+  pauseOnHover = false,
+  children,
+  vertical = false,
+  repeat = 4,
+  ...props
+}: {
+  className?: string;
+  reverse?: boolean;
+  pauseOnHover?: boolean;
+  children?: React.ReactNode;
+  vertical?: boolean;
+  repeat?: number;
+  [key: string]: any;
+}) => {
+  return (
+    <div
+      {...props}
+      className={cn(
+        "group flex overflow-hidden p-2 [--duration:40s] [--gap:1rem] [gap:var(--gap)]",
+        {
+          "flex-row": !vertical,
+          "flex-col": vertical,
+        },
+        className
+      )}
+    >
+      {Array(repeat)
+        .fill(0)
+        .map((_, i) => (
+          <div
+            key={i}
+            className={cn("flex shrink-0 justify-around [gap:var(--gap)]", {
+              "animate-scroll flex-row": !vertical,
+              "animate-scroll-vertical flex-col": vertical,
+              "group-hover:[animation-play-state:paused]": pauseOnHover,
+              "[animation-direction:reverse]": reverse,
+            })}
+          >
+            {/* Render Logos Here */}
+            {CLIENTS.map((client, idx) => {
+              const Icon = client.icon;
+              return (
+                <div
+                  key={idx}
+                  className="flex items-center justify-center px-8 py-4 mx-4 bg-white/5 border border-white/10 rounded-lg whitespace-nowrap text-zinc-400 font-bold text-lg hover:text-[#dfb755] hover:border-[#dfb755] transition-colors cursor-pointer"
+                >
+                  <Icon className="mr-3 h-6 w-6 text-zinc-400" />
+                  <span>{client.name}</span>
+                </div>
+              );
+            })}
+          </div>
+        ))}
+    </div>
+  );
+};
+
+--- END: src\components\ui\Marquee.tsx ---
+
+--- START: src\components\ui\Scene3D.tsx ---
+"use client";
+
+import { Environment, Float, MeshDistortMaterial } from "@react-three/drei";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { useRef } from "react";
+import * as THREE from "three";
+
+function RotatingShape() {
+  const meshRef = useRef<THREE.Mesh>(null);
+
+  useFrame((state) => {
+    if (!meshRef.current) return;
+    const time = state.clock.getElapsedTime();
+    // Rotate smoothly
+    meshRef.current.rotation.x = time * 0.2;
+    meshRef.current.rotation.y = time * 0.3;
+  });
+
+  return (
+    <Float speed={2} rotationIntensity={0.5} floatIntensity={1}>
+      <mesh ref={meshRef} scale={2.5}>
+        <icosahedronGeometry args={[1, 0]} /> {/* Abstract Geometric Shape */}
+        <MeshDistortMaterial
+          color="#dfb755" // Gold Color
+          envMapIntensity={1}
+          clearcoat={1}
+          clearcoatRoughness={0.1}
+          metalness={0.9} // Very shiny
+          roughness={0.2}
+          distort={0.4} // Adds a "liquid metal" effect
+          speed={2}
+        />
+      </mesh>
+    </Float>
+  );
+}
+
+export function Scene3D() {
+  return (
+    <div className="absolute inset-0 z-0 h-full w-full opacity-40 pointer-events-none">
+      <Canvas camera={{ position: [0, 0, 8], fov: 45 }}>
+        {/* Lighting */}
+        <ambientLight intensity={0.5} />
+        <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} color="#dfb755" />
+        <pointLight position={[-10, -10, -10]} intensity={1} color="#07162f" />
+
+        {/* The 3D Object */}
+        <RotatingShape />
+
+        {/* Environment for reflections */}
+        <Environment preset="city" />
+      </Canvas>
+    </div>
+  );
+}
+
+--- END: src\components\ui\Scene3D.tsx ---
+
+--- START: src\components\ui\SpotlightCard.tsx ---
+"use client";
+import React, { useRef, useState } from "react";
+
+export const SpotlightCard = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => {
+  const divRef = useRef<HTMLDivElement>(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [opacity, setOpacity] = useState(0);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!divRef.current) return;
+    const rect = divRef.current.getBoundingClientRect();
+    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
+
+  return (
+    <div
+      ref={divRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setOpacity(1)}
+      onMouseLeave={() => setOpacity(0)}
+      className={`relative overflow-hidden rounded-xl border border-white/10 bg-[#0b1d3b] ${className}`}
+    >
+      {/* The Glow Effect */}
+      <div
+        className="pointer-events-none absolute -inset-px transition duration-300 z-10"
+        style={{
+          opacity,
+          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(223, 183, 85, 0.1), transparent 40%)`,
+        }}
+      />
+      <div className="relative z-20 h-full">{children}</div>
+    </div>
+  );
+};
+
+--- END: src\components\ui\SpotlightCard.tsx ---
+
+--- START: src\components\ui\Terminal.tsx ---
+"use client";
+
+import { motion } from "framer-motion";
+
+export function Terminal() {
+  const lines = [
+    { text: "> Initializing system...", color: "text-zinc-500" },
+    { text: "> Loading growth protocols...", color: "text-zinc-500" },
+    { text: "> CHECK: ISO 9001:2015... [OK]", color: "text-green-500" },
+    { text: "> CHECK: CMMI Level 5... [OK]", color: "text-green-500" },
+    { text: "> CALCULATING GROWTH METRIC...", color: "text-primary" },
+    { text: ">> RESULT: 3800% INCREASE (2019-2023)", color: "text-primary font-bold" },
+    { text: "> Status: OPERATIONS SCALING", color: "text-blue-400" },
+  ];
+
+  return (
+    <div className="w-full rounded-xl bg-[#1e1e1e] border border-white/10 p-4 font-mono text-sm shadow-2xl">
+      <div className="flex gap-2 mb-4 border-b border-white/5 pb-2">
+        <div className="w-3 h-3 rounded-full bg-red-500/50" />
+        <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
+        <div className="w-3 h-3 rounded-full bg-green-500/50" />
+      </div>
+      <div className="flex flex-col gap-2">
+        {lines.map((line, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, x: -10 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.3 }} // Typing effect delay
+            className={line.color}
+          >
+            {line.text}
+          </motion.div>
+        ))}
+        <motion.div
+            animate={{ opacity: [0, 1] }}
+            transition={{ repeat: Infinity, duration: 0.8 }}
+            className="w-2 h-4 bg-primary inline-block"
+        />
+      </div>
+    </div>
+  );
+}
+
+--- END: src\components\ui\Terminal.tsx ---
+
+--- START: src\lib\constants.ts ---
+import { Building2, Laptop, Package, Shield, Users } from "lucide-react";
+
+export const COMPANY_INFO = {
+  name: "Magnivida Securitas Pvt Ltd",
+  tagline: "Redefining Facility Excellence.",
+  contact: {
+    address: "Regd. Office: Secunderabad, Telangana, India",
+    phone: "+91 96039 91485",
+    email: "info@magnivida.com",
+  },
+  socials: {
+    linkedin: "#",
+    twitter: "#",
+    facebook: "#",
+    instagram: "#",
+  }
+};
+
+export const SERVICES = [
+  {
+    id: "integrated-facility-management",
+    title: "Integrated Facility Management",
+    description: "Modern stewardship of your physical assets. We bring a fresh, tech-enabled approach to housekeeping and maintenance.",
+    icon: Building2,
+    colSpan: "md:col-span-2",
+  },
+  {
+    id: "security-guarding",
+    title: "Manned Security Solutions",
+    description: "Vigilant, well-trained personnel for retail, residential, and corporate protection. Safety through presence and protocol.",
+    icon: Shield,
+    colSpan: "md:col-span-1",
+  },
+  {
+    id: "workforce-staffing",
+    title: "Manpower Staffing",
+    description: "Reliable blue-collar and white-collar staffing. We handle the sourcing and vetting so you can focus on business.",
+    icon: Users,
+    colSpan: "md:col-span-1",
+  },
+  {
+    id: "office-logistics",
+    title: "Office Logistics & Supplies",
+    description: "Efficient procurement of office essentials. Keeping your workspace stocked and running without interruptions.",
+    icon: Package,
+    colSpan: "md:col-span-1",
+  },
+  {
+    id: "tech-integration",
+    title: "Tech-Enabled Operations",
+    description: "Using modern reporting tools and digital checklists to ensure transparency in every service we deliver.",
+    icon: Laptop,
+    colSpan: "md:col-span-1",
+  },
+];
+
+export const INDUSTRIES = [
+  { name: "Startups & Offices", desc: "Agile Workspace Management" },
+  { name: "Residential", desc: "Community Safety & Hygiene" },
+  { name: "Retail Stores", desc: "Loss Prevention & Upkeep" },
+  { name: "SME Warehouses", desc: "Logistics Support & Security" },
+  { name: "Educational Inst.", desc: "Campus Safety & Maintenance" },
+  { name: "Hospitality", desc: "Guest Experience Support" },
+];
+
+--- END: src\lib\constants.ts ---
+
+--- START: src\lib\utils.ts ---
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+// This function allows us to merge tailwind classes safely
+// Example usage: cn("bg-red-500", props.className)
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+--- END: src\lib\utils.ts ---
