@@ -6,7 +6,7 @@ export const COMPANY_INFO = {
   name: 'Magnivida Securitas Pvt Ltd',
   tagline: 'The New Force in Manpower Supply & Facility Management.',
   contact: {
-    address: 'Regd. Office: Secunderabad, Telangana, India',
+    address: 'P101A, Shaktinagar I Main,\nR K Puram, Secunderabad 500056',
     phone: '+91 73370 69677',
     email: 'info@magnivida.com',
   },

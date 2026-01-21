@@ -14,6 +14,7 @@ function sanitizeDisplayName(name: string) {
   return name.replace(/[<>"]/g, '').replace(/\s+/g, ' ').trim().slice(0, 60);
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function submitApplication(_: any, formData: FormData) {
   try {
     const nameRaw = String(formData.get('name') ?? '').trim();
