@@ -261,49 +261,18 @@ export const INDUSTRIES = [
   { name: 'Hospitality', desc: 'Guest Experience Support' },
 ];
 
-export const OPEN_POSITIONS = [
-  {
-    id: 'sec-guard-hyd',
-    role: 'Security Guard (Unarmed)',
-    department: 'Security Operations',
-    location: 'Hyderabad, Telangana',
-    type: 'Full-Time',
-    salary: '₹15,000 - ₹18,000 / mo',
-    description:
-      'Responsible for gate management, visitor tracking, and perimeter patrolling for a corporate client.',
-    requirements: ['10th Pass', 'Height 5\'7"+', 'Min 1 year experience'],
-  },
-  {
-    id: 'housekeeping-sup-sec',
-    role: 'Housekeeping Supervisor',
-    department: 'Facility Management',
-    location: 'Secunderabad, Telangana',
-    type: 'Full-Time',
-    salary: '₹20,000 - ₹25,000 / mo',
-    description:
-      'Lead a team of 15 janitorial staff. Ensure SLAs are met and manage inventory of cleaning supplies.',
-    requirements: [
-      '12th Pass / Graduate',
-      'Team Handling Experience',
-      'Basic Computer Knowledge',
-    ],
-  },
-  {
-    id: 'field-officer',
-    role: 'Field Officer',
-    department: 'Operations',
-    location: 'Ranga Reddy District',
-    type: 'Full-Time',
-    salary: '₹25,000 + Fuel Allowance',
-    description:
-      'Patrol multiple client sites, conduct night checks, and handle client grievances on the ground.',
-    requirements: [
-      'Own Bike & License',
-      'Ex-Serviceman Preferred',
-      'Strong Communication',
-    ],
-  },
-];
+export type JobPosition = {
+  id: string;
+  role: string;
+  department: string;
+  location: string;
+  type: string;
+  salary: string;
+  description: string;
+  requirements: string[];
+};
+
+export const OPEN_POSITIONS: JobPosition[] = [];
 
 export const CLIENTS_LIST = [
   {
